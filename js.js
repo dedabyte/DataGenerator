@@ -828,7 +828,7 @@
   function parseConfig(config){
     var __repeat = valueParser(config.__repeat);
 
-    if(!__repeat){
+    if(isUndefined(__repeat)){
 
       return propParser(config);
 
@@ -871,8 +871,68 @@
     }
   }
 
+
+
+  var predefinedConfigs = {};
+
+  function addConfig(name, config){
+    predefinedConfigs[name] = config;
+  }
+
+  function removeConfig(name){
+    delete predefinedConfigs[name];
+  }
+
+  function asyncWait(){
+    return 500;
+  }
+
+  function setAsyncWait(time){
+    if(isArray(time)){
+      asyncWait = function(){
+        return randomInt(time[0], time[1]);
+      };
+    }
+    if(isNumber(time)){
+      asyncWait = function(){
+        return time;
+      }
+    }
+  }
+
+  function generate(nameOrConfig){
+    if(isString(nameOrConfig)){
+      var predefConfig = predefinedConfigs[nameOrConfig];
+      if(isDefined(predefConfig)){
+        return parseConfig(predefConfig);
+      }
+      return false;
+    }
+    return parseConfig(nameOrConfig);
+  }
+
+  function generateAsync(nameOrConfig){
+    return new Promise(function(resolve){
+      setTimeout(function(){
+        resolve(generate(nameOrConfig));
+      }, asyncWait());
+    });
+  }
+
   window.DataGenerator = function(){
-    this.generate = parseConfig
+    var self = this;
+
+    self.generate = generate;
+
+    self.configs = {
+      add: addConfig,
+      remove: removeConfig
+    };
+
+    self.async = {
+      setWait: setAsyncWait,
+      generate: generateAsync
+    }
   };
   
 })();
@@ -882,7 +942,7 @@
 /* TEST */
 var generator = new DataGenerator();
 
-var generated = generator.generate({
+var generated1 = generator.generate({
   __repeat: 'int(3, 7)',
   id: 'guid()',
   isActive: 'bool()',
@@ -900,4 +960,14 @@ var generated = generator.generate({
   birthDate: 'date(new Date(1984, 0, 1), new Date(1989, 11, 31), "dd MMMM yyyy")',
   gps: { lat: 'float(-90, 90)', lng: 'float(-180, 180)' }
 });
-console.log(generated);
+console.log(generated1);
+
+generator.configs.add('randomints', { __repeat:'int(10)', x:'int(10)' });
+var generated2 = generator.generate('randomints');
+console.log(generated2);
+
+var promise1 = generator.async.generate('randomints');
+promise1.then(function(promise1generated){
+  console.log('async', promise1generated);
+});
+
