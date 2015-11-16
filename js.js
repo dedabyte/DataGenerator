@@ -1,4 +1,5 @@
 (function(){
+  var DG = this;
 
   var DATA = {
     DATETIME_FORMATS: {
@@ -13,7 +14,7 @@
     EMAILS: ['gmail.com', 'outlook.com', 'yahoo.com'],
     COUNTRIES: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo, Republic of the', 'Congo, Democratic Republic of the', 'Costa Rica', 'Cote d\'Ivoire', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar (Burma)', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'St. Kitts and Nevis ', 'St. Lucia', 'St. Vincent and The Grenadines ', 'Samoa', 'San Marino', 'Sao Tome and Principe ', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'UK (United Kingdom)', 'USA (United States of America)', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City (Holy See)', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'],
     COMPANIES: ['Apple', 'Samsung Group', 'Google', 'Microsoft', 'Verizon', 'AT&T', 'Amazon.com', 'GE', 'China Mobile', 'Walmart', 'Coca-Cola', 'IBM', 'Toyota', 'Wells Fargo', 'BMW', 'T (Telekom)', 'Volkswagen', 'Shell', 'Walt Disney', 'ICBC', 'Mercedes-Benz', 'Vodafone', 'HSBC', 'China Construction Bank', 'Citi', 'Bank of America', 'Intel', 'Chase', 'The Home Depot', 'Facebook', 'Nike', 'Cisco', 'Oracle', 'Agricultural Bank of China', 'Mitsubishi (Conglomerate)', 'Honda', 'McDonald\'s', 'American Express', 'Pepsi', 'Nestle', 'Allianz', 'Siemens', 'Bank of China', 'Ford', 'CVS', 'Orange', 'UPS', 'AXA', 'Hyundai', 'Santander'],
-    CITIES: ['Shanghai', 'Karachi', 'Lagos', 'Delhi', 'Istanbul', 'Tokyo', 'Mumbai', 'Moscow', 'São Paulo', 'Beijing', 'Shenzhen', 'Seoul', 'Lahore', 'Jakarta', 'Guangzhou', 'Kinshasa', 'Tianjin', 'Cairo', 'Mexico City', 'Lima', 'New York City', 'Bengaluru', 'London', 'Bangkok', 'Dongguan', 'Chongqing', 'Nanjing', 'Tehran', 'Shenyang', 'Bogotá', 'Ho Chi Minh City', 'Ningbo', 'Hong Kong', 'Baghdad', 'Changsha', 'Dhaka', 'Wuhan', 'Hyderabad', 'Hanoi', 'Faisalabad', 'Rio de Janeiro', 'Foshan', 'Santiago', 'Riyadh', 'Ahmedabad', 'Singapore', 'Shantou', 'Yangon', 'Saint Petersburg', 'Chennai'],
+    CITIES: ['Shanghai', 'Karachi', 'Lagos', 'Delhi', 'Istanbul', 'Tokyo', 'Mumbai', 'Moscow', 'Sï¿½o Paulo', 'Beijing', 'Shenzhen', 'Seoul', 'Lahore', 'Jakarta', 'Guangzhou', 'Kinshasa', 'Tianjin', 'Cairo', 'Mexico City', 'Lima', 'New York City', 'Bengaluru', 'London', 'Bangkok', 'Dongguan', 'Chongqing', 'Nanjing', 'Tehran', 'Shenyang', 'Bogotï¿½', 'Ho Chi Minh City', 'Ningbo', 'Hong Kong', 'Baghdad', 'Changsha', 'Dhaka', 'Wuhan', 'Hyderabad', 'Hanoi', 'Faisalabad', 'Rio de Janeiro', 'Foshan', 'Santiago', 'Riyadh', 'Ahmedabad', 'Singapore', 'Shantou', 'Yangon', 'Saint Petersburg', 'Chennai'],
     STREETS: ['Addison Road', 'Adler Street', 'Albany Street', 'Albemarle Street', 'Albert Embankment', 'Attlee Road', 'Ayles Road', 'Baker Street', 'Baylis Road', 'Beauchamp Place', 'Bedford Square', 'Bellot Street', 'Berkeley Square', 'Bevin Road', 'Black Prince Road', 'Bob Marley Way', 'Bond Street', 'Bondfield Avenue', 'Bouverie Street', 'Brunel Road', 'Butler Road', 'Cadogan Place', 'Cavendish Square', 'Caxton Street', 'Charles II Street', 'Charlotte Street', 'Chatham Avenue', 'Chester Terrace', 'Cheyne Walk', 'Clarence Street', 'Cleveland Street', 'Connaught Square', 'Cromwell Road', 'Cumberland Terrace', 'Curzon Street', 'Czar Street', 'Dacre Street', 'Dean Bradley Street', 'Dean Farrar Street', 'Dean Ryle Street', 'Dorando Close', 'Downing Street', 'Drury Lane', 'Drury Road', 'Duke of Wellington Place', 'Empress Drive', 'Evelyn Street', 'Fitzroy Square', 'Flowers Close', 'Frith Street'],
     MALE_NAMES: ['Jacob', 'Harry', 'Aiden', 'Shawn', 'Alexander', 'Nathan', 'Muhammad', 'Ali', 'Niall', 'Aaron', 'Tyler', 'Logan', 'Daniel', 'Kevin', 'Austin', 'Jonah', 'Joshua', 'Jason', 'Alex', 'Dylan', 'Robert', 'Michael', 'Blake', 'Anthony', 'James', 'Zayn', 'Louis', 'Ryan', 'Andrew', 'Jayden', 'Liam', 'Christopher', 'Brian', 'David', 'Joseph', 'Mason', 'Matthew', 'John', 'Kyle', 'Jack', 'Adam', 'Max', 'Ethan', 'Noah', 'Brandon', 'Luke', 'William', 'Jackson', 'Jordan', 'Spencer'],
     FEMALE_NAMES: ['Chloe', 'Charlotte', 'Alyssa', 'Emily', 'Elizabeth', 'Lucy', 'Aaliyah', 'Abigail', 'Jade', 'Emma', 'Rebecca', 'Abby', 'Jennifer', 'Samantha', 'Kellie', 'Olivia', 'Lauren', 'Natalie', 'Hannah', 'Ashley', 'Amanda', 'Jessica', 'Anna', 'Bella', 'Sarah', 'Zoe', 'Rachel', 'Lily', 'Nicole', 'Taylor', 'Savannah', 'Madison', 'Alexis', 'Isabella', 'Megan', 'Paige', 'Sophia', 'Amy', 'Ellie', 'Ava', 'Jasmine', 'Vanessa', 'Grace', 'Sophie', 'Alice', 'Ella', 'Katie', 'Lilly', 'Mia', 'Amber'],
@@ -372,7 +373,7 @@
       parts = [],
       fn, match;
 
-    format = format || 'yyyy-MM-dd';
+    format = isDefined(format) ? format : 'yyyy-MM-dd';
     if(isString(date)){
       date = NUMBER_STRING.test(date) ? toInt(date) : jsonStringToDate(date);
     }
@@ -382,6 +383,16 @@
     }
 
     if(!isDate(date) || !isFinite(date.getTime())){
+      return date;
+    }
+
+    var dateTimezoneOffset = date.getTimezoneOffset();
+    if(timezone){
+      dateTimezoneOffset = timezoneToOffset(timezone, date.getTimezoneOffset());
+      date = convertTimezoneToLocal(date, timezone, true);
+    }
+
+    if(format === false){
       return date;
     }
 
@@ -396,11 +407,6 @@
       }
     }
 
-    var dateTimezoneOffset = date.getTimezoneOffset();
-    if(timezone){
-      dateTimezoneOffset = timezoneToOffset(timezone, date.getTimezoneOffset());
-      date = convertTimezoneToLocal(date, timezone, true);
-    }
     parts.forEach(function(value){
       fn = DATE_FORMATS[value];
       text += fn ? fn(date, DATA.DATETIME_FORMATS, dateTimezoneOffset) : value.replace(/(^'|'$)/g, '').replace(/''/g, "'");
@@ -521,11 +527,11 @@
 
   /**
    * Returns random formatted date string.
-   * @param {Date} minDate - minimum date - default: 30 days before Date.now()
-   * @param {Date} maxDate - maximum date - default: 30 days after Date.now()
-   * @param {string} format - date format - default yyyy-MM-dd
-   * @param timezone - timezone
-   * @returns {string} - formatted date string
+   * @param {Date} [minDate] - minimum date - default: 30 days before Date.now()
+   * @param {Date} [maxDate] - maximum date - default: 30 days after Date.now()
+   * @param {string|boolean} [format] - date format - default yyyy-MM-dd. If 'false', returns Date object.
+   * @param [timezone] - timezone
+   * @returns {string|Date} - formatted date string or Date object
    */
   function randomDate(minDate, maxDate, format, timezone){
     var oneDay = 86400000;
@@ -634,10 +640,14 @@
   }
 
   /**
-   * Returns random argument from given method arguments.
-   * @returns {string}
+   * Returns random argument from given method arguments, or random array element if argument is array.
+   * @param {Array} [array]
+   * @returns {*}
    */
-  function randomArg(){
+  function randomArg(array){
+    if(isArray(array)){
+      return getRandomFromArray(array);
+    }
     var args = argumentsToArray(arguments);
     return getRandomFromArray(args);
   }
@@ -714,14 +724,32 @@
     return words;
   }
 
+  /**
+   * Returns array of random words.
+   * @param {number} [minCount] - minimum words count - default: 1
+   * @param {number} [maxCount] - maximum words count - default: 10
+   * @returns {Array}
+   */
   function randomWords(minCount, maxCount){
     return words(minCount, maxCount);
   }
 
+  /**
+   * Returns array of random long words.
+   * @param {number} [minCount] - minimum words count - default: 1
+   * @param {number} [maxCount] - maximum words count - default: 10
+   * @returns {Array}
+   */
   function randomLongerWords(minCount, maxCount){
     return words(minCount, maxCount, true);
   }
 
+  /**
+   * Returns array of random short words.
+   * @param {number} [minCount] - minimum words count - default: 1
+   * @param {number} [maxCount] - maximum words count - default: 10
+   * @returns {Array}
+   */
   function randomShorterWords(minCount, maxCount){
     return words(minCount, maxCount, false);
   }
@@ -781,7 +809,7 @@
     wordsLong: randomLongerWords,
     wordsShort: randomShorterWords,
     text: randomText,
-    randomArg: randomArg,
+    random: randomArg,
     image: randomImage
   };
 
@@ -916,19 +944,30 @@
     });
   }
 
-  function setData(dataName, data){
-    if(DATA.hasOwnProperty(dataName)){
+  function setData(dataObject){
+    for(var dataName in dataObject){
+      if(!dataObject.hasOwnProperty(dataName)){
+        continue;
+      }
+      var data = dataObject[dataName];
+      if(isDefined(DATA.DATETIME_FORMATS) && DATA.DATETIME_FORMATS.hasOwnProperty(dataName)){
+        DATA.DATETIME_FORMATS[dataName] = data;
+        continue;
+      }
       DATA[dataName] = data;
       if(dataName === 'LOREM_PARAGRAPHS'){
         setOtherLoremVars();
       }
-      return true;
     }
-    else if(DATA.DATETIME_FORMATS.hasOwnProperty(dataName)){
-      DATA.DATETIME_FORMATS[dataName] = data;
-      return true;
-    }
-    return false;
+  }
+
+  function extendGenerator(name, generatorFunction){
+    generators[name] = function(){
+      return generatorFunction.apply({
+        DATA: DATA,
+        generators: generators
+      }, arguments);
+    };
   }
 
   window.DataGenerator = function(){
@@ -946,7 +985,9 @@
       generate: generateAsync
     };
 
-    self.setData = setData
+    self.setData = setData;
+
+    self.extend = extendGenerator;
   };
   
 })();
@@ -969,7 +1010,7 @@ var generated = generator.generate({
   balance: 'formattedNumber(100000, 1000000)',
   phone: 'numberPattern("06#/##-##-###")',
   tags: 'words()',
-  position: 'randomArg("developer", "tester", "manager")',
+  position: 'random("developer", "tester", "manager")',
   bio: 'text("p", 1)',
   birthDate: 'date(new Date(1984, 0, 1), new Date(1989, 11, 31), "dd MMMM yyyy")',
   gps: { lat: 'float(-90, 90)', lng: 'float(-180, 180)' }
@@ -991,6 +1032,25 @@ var promise1 = generator.async.generate('randomints1');
 promise1.then(function(promise1generated){
   console.log('async', promise1generated);
 });
+
+
+generator.setData({
+  SMOOTHIE: {
+    FRUITS: [ 'banana', 'apple', 'orange', 'pomegranate', 'mango' ],
+    BEVERAGES: [ 'milk', 'yoghurt' ],
+    EXTRAS: [ 'chocolate', 'honey', 'cinamon' ]
+  }
+});
+generator.extend('smoothieFruit', function(){
+  return this.generators.random(this.DATA.SMOOTHIE.FRUITS);
+});
+generator.extend('smoothieBeverage', function(){
+  return this.generators.random(this.DATA.SMOOTHIE.BEVERAGES);
+});
+generator.extend('smoothieExtra', function(){
+  return this.generators.random(this.DATA.SMOOTHIE.EXTRAS);
+});
+console.log(generator.generate('I want to make a smoothie with one {{smoothieFruit()}}, one {{smoothieFruit()}}, a glass of {{smoothieBeverage()}} and a spoon of {{smoothieExtra()}}.'));
 
 
 
