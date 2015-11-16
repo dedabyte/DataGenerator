@@ -20,6 +20,7 @@
     FEMALE_NAMES: ['Chloe', 'Charlotte', 'Alyssa', 'Emily', 'Elizabeth', 'Lucy', 'Aaliyah', 'Abigail', 'Jade', 'Emma', 'Rebecca', 'Abby', 'Jennifer', 'Samantha', 'Kellie', 'Olivia', 'Lauren', 'Natalie', 'Hannah', 'Ashley', 'Amanda', 'Jessica', 'Anna', 'Bella', 'Sarah', 'Zoe', 'Rachel', 'Lily', 'Nicole', 'Taylor', 'Savannah', 'Madison', 'Alexis', 'Isabella', 'Megan', 'Paige', 'Sophia', 'Amy', 'Ellie', 'Ava', 'Jasmine', 'Vanessa', 'Grace', 'Sophie', 'Alice', 'Ella', 'Katie', 'Lilly', 'Mia', 'Amber'],
     SURNAMES: ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson', 'Clark', 'Rodriguez', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'Hernandez', 'King', 'Wright', 'Lopez', 'Hill', 'Scott', 'Green', 'Adams', 'Baker', 'Gonzalez', 'Nelson', 'Carter', 'Mitchell', 'Perez', 'Roberts', 'Turner', 'Phillips', 'Campbell', 'Parker', 'Evans', 'Edwards', 'Collins'],
     CHARS: 'QWERTYUIOPASDFGHJKLZXCVBNM',
+    GRADES: 'ABCDEF',
     LOREM_PARAGRAPHS: [
       'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.',
       'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.',
@@ -779,10 +780,6 @@
     return ret;
   }
 
-  function randomChar(upOrLow){
-    return char(1, upOrLow);
-  }
-
   function randomChars(count, upOrLow){
     count = setValueToDefault(count, 10);
     return char(count, upOrLow);
@@ -792,6 +789,10 @@
     return pattern.replace(/\#/g, function(){
       return char(1, upOrLow);
     });
+  }
+
+  function randomGrage(){
+    return getRandomFromArray(DATA.GRADES);
   }
 
   /**
@@ -838,9 +839,9 @@
     wordsLong: randomLongerWords,
     wordsShort: randomShorterWords,
     text: randomText,
-    char: randomChar,
     chars: randomChars,
     charsPattern: randomCharsPattern,
+    grade: randomGrage,
     random: randomArg,
     image: randomImage
   };
