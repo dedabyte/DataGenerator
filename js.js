@@ -750,51 +750,6 @@
 
 
 
-  function isReservedProperty(prop){
-    return ['__repeat'].indexOf(prop) >= 0;
-  }
-
-  function removeMustache(value){
-    return value.substring(2, value.length - 2);
-  }
-
-  function parseString(value){
-    try{
-      var evaluated = eval('generators.' + value);
-      return isDefined(evaluated) ? evaluated : value;
-    }catch(e){
-      return value.replace(/{{(.*?)}}/g, function(s){
-        s = removeMustache(s);
-        var generatorName = s.split('(')[0];
-        if(generatorName && generators.hasOwnProperty(generatorName)){
-          return eval('generators.' + s);
-        }
-        return s;
-      });
-    }
-  }
-
-  function parseArray(arr){
-    var first = arr[0];
-    if(isString(first) && first.indexOf('__repeat:') === 0){
-      var length = parseInt(first.replace('__repeat:', ''));
-      var ret = [];
-      var second = arr[1];
-      for(var i = 0; i < length; i++){
-        if(isObject(second)){
-          ret.push(parseConfig(second));
-        }else{
-          ret.push(valueParser(second));
-        }
-      }
-      return ret;
-    }else{
-      return arr.map(function(a){
-        return valueParser(a);
-      });
-    }
-  }
-
   var generators = {
     guid: guid,
     float: randomFloat,
@@ -825,43 +780,84 @@
     image: randomImage
   };
 
-  function parseConfig(config){
-    var __repeat = valueParser(config.__repeat);
+  function isReservedProperty(prop){
+    return ['__repeat'].indexOf(prop) >= 0;
+  }
+
+  function removeMustache(value){
+    return value.substring(2, value.length - 2);
+  }
+
+
+
+  function parseString(value){
+    if(!isString(value)){
+      return value;
+    }
+    try{
+      var evaluated = eval('generators.' + value);
+      return isDefined(evaluated) ? evaluated : value;
+    }catch(e){
+      return value.replace(/{{(.*?)}}/g, function(s){
+        s = removeMustache(s);
+        var generatorName = s.split('(')[0];
+        if(generatorName && generators.hasOwnProperty(generatorName)){
+          return eval('generators.' + s);
+        }
+        return s;
+      });
+    }
+  }
+
+  function parseArray(arr){
+    var first = arr[0];
+    if(isString(first) && first.indexOf('__repeat:') === 0){
+      var length = parseInt(parseString(first.replace('__repeat:', '')));
+      var ret = [];
+      var second = arr[1];
+      for(var i = 0; i < length; i++){
+        ret.push(parseGeneric(second));
+      }
+      return ret;
+    }else{
+      return arr.map(function(a){
+        return parseGeneric(a);
+      });
+    }
+  }
+
+  function parseObject(config){
+    var __repeat = parseGeneric(config.__repeat);
 
     if(isUndefined(__repeat)){
-
-      return propParser(config);
-
+      return parseObjectProps(config);
     }else{
-
       var retarr = [];
       for(var i = 0; i < __repeat; i++){
-        retarr.push(propParser(config));
+        retarr.push(parseObjectProps(config));
       }
       return retarr;
-
     }
 
-    function propParser(config){
+    function parseObjectProps(config){
       var ret = {};
       for(var configProp in config){
         if(!config.hasOwnProperty(configProp) || isReservedProperty(configProp)){
           continue;
         }
         var configValue = config[configProp];
-        ret[configProp] = valueParser(configValue);
+        ret[configProp] = parseGeneric(configValue);
       }
       return ret;
     }
-
   }
 
-  function valueParser(value){
+  function parseGeneric(value){
     if(isString(value)){
       return parseString(value);
     }
     else if(isObject(value)){
-      return parseConfig(value);
+      return parseObject(value);
     }
     else if(isArray(value)){
       return parseArray(value);
@@ -901,14 +897,10 @@
   }
 
   function generate(nameOrConfig){
-    if(isString(nameOrConfig)){
-      var predefConfig = predefinedConfigs[nameOrConfig];
-      if(isDefined(predefConfig)){
-        return parseConfig(predefConfig);
-      }
-      return false;
+    if(predefinedConfigs.hasOwnProperty(nameOrConfig)){
+      return parseGeneric(predefinedConfigs[nameOrConfig]);
     }
-    return parseConfig(nameOrConfig);
+    return parseGeneric(nameOrConfig);
   }
 
   function generateAsync(nameOrConfig){
@@ -942,7 +934,7 @@
 /* TEST */
 var generator = new DataGenerator();
 
-var generated1 = generator.generate({
+var generated = generator.generate({
   __repeat: 'int(3, 7)',
   id: 'guid()',
   isActive: 'bool()',
@@ -960,14 +952,24 @@ var generated1 = generator.generate({
   birthDate: 'date(new Date(1984, 0, 1), new Date(1989, 11, 31), "dd MMMM yyyy")',
   gps: { lat: 'float(-90, 90)', lng: 'float(-180, 180)' }
 });
+console.log(generated);
+
+generator.configs.add('randomints1', { __repeat:'int(10)', x:'int(10)' });
+generator.configs.add('randomints2', [ '__repeat:int(10)', { x: 'int(10)' } ]);
+generator.configs.add('randomints3', [ '__repeat:int(10)', 'int(10)' ]);
+
+var generated1 = generator.generate('randomints1');
 console.log(generated1);
-
-generator.configs.add('randomints', { __repeat:'int(10)', x:'int(10)' });
-var generated2 = generator.generate('randomints');
+var generated2 = generator.generate('randomints2');
 console.log(generated2);
+var generated3 = generator.generate('randomints3');
+console.log(generated3);
 
-var promise1 = generator.async.generate('randomints');
+var promise1 = generator.async.generate('randomints1');
 promise1.then(function(promise1generated){
   console.log('async', promise1generated);
 });
+
+
+
 
