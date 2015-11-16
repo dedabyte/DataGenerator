@@ -1,52 +1,57 @@
 (function(){
 
-  var DATETIME_FORMATS = {
-    AMPMS: ['AM', 'PM'],
-    ERANAMES: ['Before Christ', 'Anno Domini'],
-    ERAS: ['BC', 'AD'],
-    DAY: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    SHORTDAY: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    MONTH: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    SHORTMONTH: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  var DATA = {
+    DATETIME_FORMATS: {
+      AMPMS: ['AM', 'PM'],
+      ERANAMES: ['Before Christ', 'Anno Domini'],
+      ERAS: ['BC', 'AD'],
+      DAY: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      SHORTDAY: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      MONTH: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      SHORTMONTH: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    EMAILS: ['gmail.com', 'outlook.com', 'yahoo.com'],
+    COUNTRIES: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo, Republic of the', 'Congo, Democratic Republic of the', 'Costa Rica', 'Cote d\'Ivoire', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar (Burma)', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'St. Kitts and Nevis ', 'St. Lucia', 'St. Vincent and The Grenadines ', 'Samoa', 'San Marino', 'Sao Tome and Principe ', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'UK (United Kingdom)', 'USA (United States of America)', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City (Holy See)', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'],
+    COMPANIES: ['Apple', 'Samsung Group', 'Google', 'Microsoft', 'Verizon', 'AT&T', 'Amazon.com', 'GE', 'China Mobile', 'Walmart', 'Coca-Cola', 'IBM', 'Toyota', 'Wells Fargo', 'BMW', 'T (Telekom)', 'Volkswagen', 'Shell', 'Walt Disney', 'ICBC', 'Mercedes-Benz', 'Vodafone', 'HSBC', 'China Construction Bank', 'Citi', 'Bank of America', 'Intel', 'Chase', 'The Home Depot', 'Facebook', 'Nike', 'Cisco', 'Oracle', 'Agricultural Bank of China', 'Mitsubishi (Conglomerate)', 'Honda', 'McDonald\'s', 'American Express', 'Pepsi', 'Nestle', 'Allianz', 'Siemens', 'Bank of China', 'Ford', 'CVS', 'Orange', 'UPS', 'AXA', 'Hyundai', 'Santander'],
+    CITIES: ['Shanghai', 'Karachi', 'Lagos', 'Delhi', 'Istanbul', 'Tokyo', 'Mumbai', 'Moscow', 'São Paulo', 'Beijing', 'Shenzhen', 'Seoul', 'Lahore', 'Jakarta', 'Guangzhou', 'Kinshasa', 'Tianjin', 'Cairo', 'Mexico City', 'Lima', 'New York City', 'Bengaluru', 'London', 'Bangkok', 'Dongguan', 'Chongqing', 'Nanjing', 'Tehran', 'Shenyang', 'Bogotá', 'Ho Chi Minh City', 'Ningbo', 'Hong Kong', 'Baghdad', 'Changsha', 'Dhaka', 'Wuhan', 'Hyderabad', 'Hanoi', 'Faisalabad', 'Rio de Janeiro', 'Foshan', 'Santiago', 'Riyadh', 'Ahmedabad', 'Singapore', 'Shantou', 'Yangon', 'Saint Petersburg', 'Chennai'],
+    STREETS: ['Addison Road', 'Adler Street', 'Albany Street', 'Albemarle Street', 'Albert Embankment', 'Attlee Road', 'Ayles Road', 'Baker Street', 'Baylis Road', 'Beauchamp Place', 'Bedford Square', 'Bellot Street', 'Berkeley Square', 'Bevin Road', 'Black Prince Road', 'Bob Marley Way', 'Bond Street', 'Bondfield Avenue', 'Bouverie Street', 'Brunel Road', 'Butler Road', 'Cadogan Place', 'Cavendish Square', 'Caxton Street', 'Charles II Street', 'Charlotte Street', 'Chatham Avenue', 'Chester Terrace', 'Cheyne Walk', 'Clarence Street', 'Cleveland Street', 'Connaught Square', 'Cromwell Road', 'Cumberland Terrace', 'Curzon Street', 'Czar Street', 'Dacre Street', 'Dean Bradley Street', 'Dean Farrar Street', 'Dean Ryle Street', 'Dorando Close', 'Downing Street', 'Drury Lane', 'Drury Road', 'Duke of Wellington Place', 'Empress Drive', 'Evelyn Street', 'Fitzroy Square', 'Flowers Close', 'Frith Street'],
+    MALE_NAMES: ['Jacob', 'Harry', 'Aiden', 'Shawn', 'Alexander', 'Nathan', 'Muhammad', 'Ali', 'Niall', 'Aaron', 'Tyler', 'Logan', 'Daniel', 'Kevin', 'Austin', 'Jonah', 'Joshua', 'Jason', 'Alex', 'Dylan', 'Robert', 'Michael', 'Blake', 'Anthony', 'James', 'Zayn', 'Louis', 'Ryan', 'Andrew', 'Jayden', 'Liam', 'Christopher', 'Brian', 'David', 'Joseph', 'Mason', 'Matthew', 'John', 'Kyle', 'Jack', 'Adam', 'Max', 'Ethan', 'Noah', 'Brandon', 'Luke', 'William', 'Jackson', 'Jordan', 'Spencer'],
+    FEMALE_NAMES: ['Chloe', 'Charlotte', 'Alyssa', 'Emily', 'Elizabeth', 'Lucy', 'Aaliyah', 'Abigail', 'Jade', 'Emma', 'Rebecca', 'Abby', 'Jennifer', 'Samantha', 'Kellie', 'Olivia', 'Lauren', 'Natalie', 'Hannah', 'Ashley', 'Amanda', 'Jessica', 'Anna', 'Bella', 'Sarah', 'Zoe', 'Rachel', 'Lily', 'Nicole', 'Taylor', 'Savannah', 'Madison', 'Alexis', 'Isabella', 'Megan', 'Paige', 'Sophia', 'Amy', 'Ellie', 'Ava', 'Jasmine', 'Vanessa', 'Grace', 'Sophie', 'Alice', 'Ella', 'Katie', 'Lilly', 'Mia', 'Amber'],
+    SURNAMES: ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson', 'Clark', 'Rodriguez', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'Hernandez', 'King', 'Wright', 'Lopez', 'Hill', 'Scott', 'Green', 'Adams', 'Baker', 'Gonzalez', 'Nelson', 'Carter', 'Mitchell', 'Perez', 'Roberts', 'Turner', 'Phillips', 'Campbell', 'Parker', 'Evans', 'Edwards', 'Collins'],
+    LOREM_PARAGRAPHS: [
+      'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.',
+      'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.',
+      'Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.',
+      'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.',
+      'Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.',
+      'Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris.',
+      'Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus.',
+      'Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor.',
+      'Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.',
+      'Vestibulum fringilla pede sit amet augue. In turpis. Pellentesque posuere. Praesent turpis. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus. Ut varius tincidunt libero. Phasellus dolor. Maecenas vestibulum mollis'
+    ],
+    LOREM_TEXT: '',
+    LOREM_TEXT_SPLITTED: '',
+    LOREM_ALL_WORDS: '',
+    LOREM_LONGER_WORDS: '',
+    LOREM_SHORTER_WORDS: ''
   };
-  var EMAILS = ['gmail.com', 'outlook.com', 'yahoo.com'];
-  var COUNTRIES = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo, Republic of the', 'Congo, Democratic Republic of the', 'Costa Rica', 'Cote d\'Ivoire', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar (Burma)', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'St. Kitts and Nevis ', 'St. Lucia', 'St. Vincent and The Grenadines ', 'Samoa', 'San Marino', 'Sao Tome and Principe ', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'UK (United Kingdom)', 'USA (United States of America)', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City (Holy See)', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'];
-  var COMPANIES = ['Apple', 'Samsung Group', 'Google', 'Microsoft', 'Verizon', 'AT&T', 'Amazon.com', 'GE', 'China Mobile', 'Walmart', 'Coca-Cola', 'IBM', 'Toyota', 'Wells Fargo', 'BMW', 'T (Telekom)', 'Volkswagen', 'Shell', 'Walt Disney', 'ICBC', 'Mercedes-Benz', 'Vodafone', 'HSBC', 'China Construction Bank', 'Citi', 'Bank of America', 'Intel', 'Chase', 'The Home Depot', 'Facebook', 'Nike', 'Cisco', 'Oracle', 'Agricultural Bank of China', 'Mitsubishi (Conglomerate)', 'Honda', 'McDonald\'s', 'American Express', 'Pepsi', 'Nestle', 'Allianz', 'Siemens', 'Bank of China', 'Ford', 'CVS', 'Orange', 'UPS', 'AXA', 'Hyundai', 'Santander'];
-  var CITIES = ['Shanghai', 'Karachi', 'Lagos', 'Delhi', 'Istanbul', 'Tokyo', 'Mumbai', 'Moscow', 'São Paulo', 'Beijing', 'Shenzhen', 'Seoul', 'Lahore', 'Jakarta', 'Guangzhou', 'Kinshasa', 'Tianjin', 'Cairo', 'Mexico City', 'Lima', 'New York City', 'Bengaluru', 'London', 'Bangkok', 'Dongguan', 'Chongqing', 'Nanjing', 'Tehran', 'Shenyang', 'Bogotá', 'Ho Chi Minh City', 'Ningbo', 'Hong Kong', 'Baghdad', 'Changsha', 'Dhaka', 'Wuhan', 'Hyderabad', 'Hanoi', 'Faisalabad', 'Rio de Janeiro', 'Foshan', 'Santiago', 'Riyadh', 'Ahmedabad', 'Singapore', 'Shantou', 'Yangon', 'Saint Petersburg', 'Chennai'];
-  var STREETS = ['Addison Road', 'Adler Street', 'Albany Street', 'Albemarle Street', 'Albert Embankment', 'Attlee Road', 'Ayles Road', 'Baker Street', 'Baylis Road', 'Beauchamp Place', 'Bedford Square', 'Bellot Street', 'Berkeley Square', 'Bevin Road', 'Black Prince Road', 'Bob Marley Way', 'Bond Street', 'Bondfield Avenue', 'Bouverie Street', 'Brunel Road', 'Butler Road', 'Cadogan Place', 'Cavendish Square', 'Caxton Street', 'Charles II Street', 'Charlotte Street', 'Chatham Avenue', 'Chester Terrace', 'Cheyne Walk', 'Clarence Street', 'Cleveland Street', 'Connaught Square', 'Cromwell Road', 'Cumberland Terrace', 'Curzon Street', 'Czar Street', 'Dacre Street', 'Dean Bradley Street', 'Dean Farrar Street', 'Dean Ryle Street', 'Dorando Close', 'Downing Street', 'Drury Lane', 'Drury Road', 'Duke of Wellington Place', 'Empress Drive', 'Evelyn Street', 'Fitzroy Square', 'Flowers Close', 'Frith Street'];
-  var MALE_NAMES = ['Jacob', 'Harry', 'Aiden', 'Shawn', 'Alexander', 'Nathan', 'Muhammad', 'Ali', 'Niall', 'Aaron', 'Tyler', 'Logan', 'Daniel', 'Kevin', 'Austin', 'Jonah', 'Joshua', 'Jason', 'Alex', 'Dylan', 'Robert', 'Michael', 'Blake', 'Anthony', 'James', 'Zayn', 'Louis', 'Ryan', 'Andrew', 'Jayden', 'Liam', 'Christopher', 'Brian', 'David', 'Joseph', 'Mason', 'Matthew', 'John', 'Kyle', 'Jack', 'Adam', 'Max', 'Ethan', 'Noah', 'Brandon', 'Luke', 'William', 'Jackson', 'Jordan', 'Spencer'];
-  var FEMALE_NAMES = ['Chloe', 'Charlotte', 'Alyssa', 'Emily', 'Elizabeth', 'Lucy', 'Aaliyah', 'Abigail', 'Jade', 'Emma', 'Rebecca', 'Abby', 'Jennifer', 'Samantha', 'Kellie', 'Olivia', 'Lauren', 'Natalie', 'Hannah', 'Ashley', 'Amanda', 'Jessica', 'Anna', 'Bella', 'Sarah', 'Zoe', 'Rachel', 'Lily', 'Nicole', 'Taylor', 'Savannah', 'Madison', 'Alexis', 'Isabella', 'Megan', 'Paige', 'Sophia', 'Amy', 'Ellie', 'Ava', 'Jasmine', 'Vanessa', 'Grace', 'Sophie', 'Alice', 'Ella', 'Katie', 'Lilly', 'Mia', 'Amber'];
-  var SURNAMES = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson', 'Clark', 'Rodriguez', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'Hernandez', 'King', 'Wright', 'Lopez', 'Hill', 'Scott', 'Green', 'Adams', 'Baker', 'Gonzalez', 'Nelson', 'Carter', 'Mitchell', 'Perez', 'Roberts', 'Turner', 'Phillips', 'Campbell', 'Parker', 'Evans', 'Edwards', 'Collins'];
-  var LOREM_PARAGRAPHS = [
-    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.',
-    'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.',
-    'Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.',
-    'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.',
-    'Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.',
-    'Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris.',
-    'Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus.',
-    'Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor.',
-    'Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.',
-    'Vestibulum fringilla pede sit amet augue. In turpis. Pellentesque posuere. Praesent turpis. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus. Ut varius tincidunt libero. Phasellus dolor. Maecenas vestibulum mollis'
-  ];
-
-  var LOREM_TEXT, LOREM_TEXT_SPLITTED, LOREM_ALL_WORDS, LOREM_LONGER_WORDS, LOREM_SHORTER_WORDS;
 
   function setOtherLoremVars(){
-    LOREM_TEXT = LOREM_PARAGRAPHS.join(' ');
+    DATA.LOREM_TEXT = DATA.LOREM_PARAGRAPHS.join(' ');
 
-    LOREM_TEXT_SPLITTED = LOREM_TEXT.split(' ');
+    DATA.LOREM_TEXT_SPLITTED = DATA.LOREM_TEXT.split(' ');
 
-    LOREM_ALL_WORDS = LOREM_TEXT_SPLITTED.map(function(word){
+    DATA.LOREM_ALL_WORDS = DATA.LOREM_TEXT_SPLITTED.map(function(word){
       return lowercase(word).replace(/[^\w\s]/gi, '')
     });
-    LOREM_ALL_WORDS = removeDuplicatesFromArray(LOREM_ALL_WORDS);
+    DATA.LOREM_ALL_WORDS = removeDuplicatesFromArray(DATA.LOREM_ALL_WORDS);
 
-    LOREM_LONGER_WORDS = LOREM_ALL_WORDS.filter(function(word){
+    DATA.LOREM_LONGER_WORDS = DATA.LOREM_ALL_WORDS.filter(function(word){
       return word.length > 5;
     });
 
-    LOREM_SHORTER_WORDS = LOREM_ALL_WORDS.filter(function(word){
+    DATA.LOREM_SHORTER_WORDS = DATA.LOREM_ALL_WORDS.filter(function(word){
       return word.length <= 5;
     });
   }
@@ -398,7 +403,7 @@
     }
     parts.forEach(function(value){
       fn = DATE_FORMATS[value];
-      text += fn ? fn(date, DATETIME_FORMATS, dateTimezoneOffset) : value.replace(/(^'|'$)/g, '').replace(/''/g, "'");
+      text += fn ? fn(date, DATA.DATETIME_FORMATS, dateTimezoneOffset) : value.replace(/(^'|'$)/g, '').replace(/''/g, "'");
     });
 
     return text;
@@ -472,7 +477,7 @@
     min = setValueToDefault(min, 1);
     max = setValueToDefault(max, 7);
 
-    return DATETIME_FORMATS.DAY[randomInt(min - 1, max - 1)];
+    return DATA.DATETIME_FORMATS.DAY[randomInt(min - 1, max - 1)];
   }
 
   /**
@@ -485,7 +490,7 @@
     min = setValueToDefault(min, 1);
     max = setValueToDefault(max, 7);
 
-    return DATETIME_FORMATS.SHORTDAY[randomInt(min - 1, max - 1)];
+    return DATA.DATETIME_FORMATS.SHORTDAY[randomInt(min - 1, max - 1)];
   }
 
   /**
@@ -498,7 +503,7 @@
     min = setValueToDefault(min, 1);
     max = setValueToDefault(max, 12);
 
-    return DATETIME_FORMATS.MONTH[randomInt(min - 1, max - 1)];
+    return DATA.DATETIME_FORMATS.MONTH[randomInt(min - 1, max - 1)];
   }
 
   /**
@@ -511,7 +516,7 @@
     min = setValueToDefault(min, 1);
     max = setValueToDefault(max, 12);
 
-    return DATETIME_FORMATS.SHORTMONTH[randomInt(min - 1, max - 1)];
+    return DATA.DATETIME_FORMATS.SHORTMONTH[randomInt(min - 1, max - 1)];
   }
 
   /**
@@ -536,7 +541,7 @@
    * @returns {string} - country name
    */
   function randomCountry(){
-    return getRandomFromArray(COUNTRIES);
+    return getRandomFromArray(DATA.COUNTRIES);
   }
 
   /**
@@ -571,7 +576,7 @@
    * @returns {string}
    */
   function randomMaleName(noCache){
-    var name = getRandomFromArray(MALE_NAMES);
+    var name = getRandomFromArray(DATA.MALE_NAMES);
     if(!noCache){
       namesCache.name = name;
     }
@@ -584,7 +589,7 @@
    */
 
   function randomFemaleName(noCache){
-    var name = getRandomFromArray(FEMALE_NAMES);
+    var name = getRandomFromArray(DATA.FEMALE_NAMES);
     if(!noCache){
       namesCache.name = name;
     }
@@ -596,7 +601,7 @@
    * @returns {string}
    */
   function randomName(noCache){
-    var allNames = concat(MALE_NAMES, FEMALE_NAMES);
+    var allNames = concat(DATA.MALE_NAMES, DATA.FEMALE_NAMES);
     var name = getRandomFromArray(allNames);
     if(!noCache){
       namesCache.name = name;
@@ -609,7 +614,7 @@
    * @returns {string}
    */
   function randomSurname(noCache){
-    var surname = getRandomFromArray(SURNAMES);
+    var surname = getRandomFromArray(DATA.SURNAMES);
     if(!noCache){
       namesCache.surname = surname;
     }
@@ -622,9 +627,9 @@
    */
   function randomEmail(noCache){
     if(noCache){
-      return lowercase(randomName(true) + '.' + randomSurname(true) + '@' + getRandomFromArray(EMAILS));
+      return lowercase(randomName(true) + '.' + randomSurname(true) + '@' + getRandomFromArray(DATA.EMAILS));
     }else{
-      return lowercase((namesCache.name || randomName(true)) + '.' + (namesCache.surname || randomSurname(true)) + '@' + getRandomFromArray(EMAILS));
+      return lowercase((namesCache.name || randomName(true)) + '.' + (namesCache.surname || randomSurname(true)) + '@' + getRandomFromArray(DATA.EMAILS));
     }
   }
 
@@ -642,7 +647,7 @@
    * @returns {string}
    */
   function randomCompany(){
-    return getRandomFromArray(COMPANIES);
+    return getRandomFromArray(DATA.COMPANIES);
   }
 
   /**
@@ -650,7 +655,7 @@
    * @returns {string}
    */
   function randomCity(){
-    return getRandomFromArray(CITIES);
+    return getRandomFromArray(DATA.CITIES);
   }
 
   /**
@@ -658,7 +663,7 @@
    * @returns {string}
    */
   function randomStreet(){
-    return getRandomFromArray(STREETS);
+    return getRandomFromArray(DATA.STREETS);
   }
 
   /**
@@ -671,13 +676,13 @@
     if(type === 'p'){
       var paragraphs = [];
       for(var i = 0; i < count; i++){
-        paragraphs.push(LOREM_PARAGRAPHS[i % LOREM_PARAGRAPHS.length]);
+        paragraphs.push(DATA.LOREM_PARAGRAPHS[i % DATA.LOREM_PARAGRAPHS.length]);
       }
       return paragraphs.join('\r\n');
     }
 
     if(type === 't'){
-      return LOREM_TEXT_SPLITTED.slice(0, count).join(' ');
+      return DATA.LOREM_TEXT_SPLITTED.slice(0, count).join(' ');
     }
   }
 
@@ -692,9 +697,9 @@
     var count = randomInt(minCount, maxCount);
     var arr = [];
     if(isUndefined(longOrShort)){
-      arr = LOREM_ALL_WORDS;
+      arr = DATA.LOREM_ALL_WORDS;
     }else{
-      arr = longOrShort ? LOREM_LONGER_WORDS : LOREM_SHORTER_WORDS;
+      arr = longOrShort ? DATA.LOREM_LONGER_WORDS : DATA.LOREM_SHORTER_WORDS;
     }
     count = setValueToDefault(count, 10);
     var words = [], word;
@@ -911,6 +916,21 @@
     });
   }
 
+  function setData(dataName, data){
+    if(DATA.hasOwnProperty(dataName)){
+      DATA[dataName] = data;
+      if(dataName === 'LOREM_PARAGRAPHS'){
+        setOtherLoremVars();
+      }
+      return true;
+    }
+    else if(DATA.DATETIME_FORMATS.hasOwnProperty(dataName)){
+      DATA.DATETIME_FORMATS[dataName] = data;
+      return true;
+    }
+    return false;
+  }
+
   window.DataGenerator = function(){
     var self = this;
 
@@ -924,7 +944,9 @@
     self.async = {
       setWait: setAsyncWait,
       generate: generateAsync
-    }
+    };
+
+    self.setData = setData
   };
   
 })();
