@@ -19,6 +19,7 @@
     MALE_NAMES: ['Jacob', 'Harry', 'Aiden', 'Shawn', 'Alexander', 'Nathan', 'Muhammad', 'Ali', 'Niall', 'Aaron', 'Tyler', 'Logan', 'Daniel', 'Kevin', 'Austin', 'Jonah', 'Joshua', 'Jason', 'Alex', 'Dylan', 'Robert', 'Michael', 'Blake', 'Anthony', 'James', 'Zayn', 'Louis', 'Ryan', 'Andrew', 'Jayden', 'Liam', 'Christopher', 'Brian', 'David', 'Joseph', 'Mason', 'Matthew', 'John', 'Kyle', 'Jack', 'Adam', 'Max', 'Ethan', 'Noah', 'Brandon', 'Luke', 'William', 'Jackson', 'Jordan', 'Spencer'],
     FEMALE_NAMES: ['Chloe', 'Charlotte', 'Alyssa', 'Emily', 'Elizabeth', 'Lucy', 'Aaliyah', 'Abigail', 'Jade', 'Emma', 'Rebecca', 'Abby', 'Jennifer', 'Samantha', 'Kellie', 'Olivia', 'Lauren', 'Natalie', 'Hannah', 'Ashley', 'Amanda', 'Jessica', 'Anna', 'Bella', 'Sarah', 'Zoe', 'Rachel', 'Lily', 'Nicole', 'Taylor', 'Savannah', 'Madison', 'Alexis', 'Isabella', 'Megan', 'Paige', 'Sophia', 'Amy', 'Ellie', 'Ava', 'Jasmine', 'Vanessa', 'Grace', 'Sophie', 'Alice', 'Ella', 'Katie', 'Lilly', 'Mia', 'Amber'],
     SURNAMES: ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson', 'Clark', 'Rodriguez', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'Hernandez', 'King', 'Wright', 'Lopez', 'Hill', 'Scott', 'Green', 'Adams', 'Baker', 'Gonzalez', 'Nelson', 'Carter', 'Mitchell', 'Perez', 'Roberts', 'Turner', 'Phillips', 'Campbell', 'Parker', 'Evans', 'Edwards', 'Collins'],
+    CHARS: 'QWERTYUIOPASDFGHJKLZXCVBNM',
     LOREM_PARAGRAPHS: [
       'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.',
       'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.',
@@ -765,6 +766,34 @@
     });
   }
 
+  function char(count, upOrLow){
+    var ret = '';
+    for(var i = 0; i < count; i++){
+      var char = getRandomFromArray(DATA.CHARS);
+      if(isUndefined(upOrLow)){
+        ret += randomBool() ? char : lowercase(char);
+      }else{
+        ret += upOrLow ? char : lowercase(char);
+      }
+    }
+    return ret;
+  }
+
+  function randomChar(upOrLow){
+    return char(1, upOrLow);
+  }
+
+  function randomChars(count, upOrLow){
+    count = setValueToDefault(count, 10);
+    return char(count, upOrLow);
+  }
+
+  function randomCharsPattern(pattern, upOrLow){
+    return pattern.replace(/\#/g, function(){
+      return char(1, upOrLow);
+    });
+  }
+
   /**
    * Returns link to placehold.it image service.
    * @param {number} [width] - image width, default: 128
@@ -801,14 +830,17 @@
     monthShort: randomMonthShort,
     email: randomEmail,
     gender: randomGender,
-    name: randomName,
-    nameMale: randomMaleName,
-    nameFemale: randomFemaleName,
-    surname: randomSurname,
+    firstname: randomName,
+    firstnameMale: randomMaleName,
+    firstnameFemale: randomFemaleName,
+    lastname: randomSurname,
     words: randomWords,
     wordsLong: randomLongerWords,
     wordsShort: randomShorterWords,
     text: randomText,
+    char: randomChar,
+    chars: randomChars,
+    charsPattern: randomCharsPattern,
     random: randomArg,
     image: randomImage
   };
@@ -962,18 +994,21 @@
   }
 
   function extendGenerator(name, generatorFunction){
-    generators[name] = function(){
+    var newGenerator = function(){
       return generatorFunction.apply({
         DATA: DATA,
         generators: generators
       }, arguments);
     };
+    generators[name] = newGenerator;
+    this.generate[name] = newGenerator;
   }
 
   window.DataGenerator = function(){
     var self = this;
 
     self.generate = generate;
+    merge(self.generate, generators);
 
     self.configs = {
       add: addConfig,
@@ -987,7 +1022,9 @@
 
     self.setData = setData;
 
-    self.extend = extendGenerator;
+    self.extend = function(){
+      extendGenerator.apply(self, arguments);
+    };
   };
   
 })();
@@ -1002,7 +1039,7 @@ var generated = generator.generate({
   id: 'guid()',
   isActive: 'bool()',
   profilePic: 'image(300)',
-  name: '{{name()}} {{surname()}}',
+  name: '{{firstname()}} {{lastname()}}',
   gender: 'gender()',
   email: 'email()',
   address: '{{int()}} {{street()}}, {{city()}}, {{country()}}',
