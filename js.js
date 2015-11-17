@@ -61,6 +61,20 @@
 
   setOtherLoremVars();
 
+  function getData(path) {
+    var keys = path.split('.');
+    var levels = keys.length;
+    var tempPref = DATA;
+    for (var i = 0; i < levels - 1; i++) {
+      var temp = tempPref[keys[i]];
+      if (temp === undefined) {
+        return;
+      }
+      tempPref = temp;
+    }
+    return tempPref[keys[levels - 1]];
+  }
+
 
 
   var namesCache = {
@@ -642,13 +656,19 @@
   }
 
   /**
-   * Returns random argument from given method arguments, or random array element if argument is array.
-   * @param {Array} [array]
+   * Returns random argument from given method arguments, random array element if argument is array or DATA name property.
+   * @param {Array|string} [arrayOrString]
    * @returns {*}
    */
-  function randomArg(array){
-    if(isArray(array)){
-      return getRandomFromArray(array);
+  function randomArg(arrayOrString){
+    if(arguments.length === 1){
+      if(isArray(arrayOrString)){
+        return getRandomFromArray(arrayOrString);
+      }
+      var dataForStringPath = getData(arrayOrString);
+      if(isString(arrayOrString) && isDefined(dataForStringPath)){
+        return getRandomFromArray(dataForStringPath);
+      }
     }
     var args = argumentsToArray(arguments);
     return getRandomFromArray(args);
@@ -1089,6 +1109,9 @@ generator.extend('smoothieExtra', function(){
   return this.generators.random(this.DATA.SMOOTHIE.EXTRAS);
 });
 console.log(generator.generate('I want to make a smoothie with one {{smoothieFruit()}}, one {{smoothieFruit()}}, a glass of {{smoothieBeverage()}} and a spoon of {{smoothieExtra()}}.'));
+
+console.log(generator.generate.random('COUNTRIES'));
+console.log(generator.generate.random('SMOOTHIE.FRUITS'));
 
 
 
